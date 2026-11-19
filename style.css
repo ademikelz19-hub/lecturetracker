@@ -369,6 +369,10 @@ body {
     /* Crimson/Red left accent for Examinations */
     border-left-color: #ef4444;
 }
+.card-assignment {
+    /* Violet/Purple left accent for Assignment Submissions */
+    border-left-color: #8b5cf6;
+}
 
 /* Card Header: Top row of card containing Category Badge and Status Badge */
 .card-header {
@@ -384,7 +388,7 @@ body {
     gap: 8px;
 }
 
-/* Category Badge: Displays whether item is Lecture, Test, or Examination */
+/* Category Badge: Displays whether item is Lecture, Test, Examination, or Assignment */
 .category-badge {
     /* Small font size for badge */
     font-size: 0.75rem;
@@ -428,6 +432,16 @@ body {
     color: #b91c1c;
     /* Red outline */
     border: 1px solid #fecaca;
+}
+
+/* Assignment Badge Color Style */
+.badge-assignment {
+    /* Light purple background */
+    background-color: #f5f3ff;
+    /* Deep violet text */
+    color: #6d28d9;
+    /* Violet outline */
+    border: 1px solid #ddd6fe;
 }
 
 /* Status Badge: Displays "Upcoming", "Starting Soon", or "Passed" */

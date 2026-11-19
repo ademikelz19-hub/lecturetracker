@@ -23,14 +23,14 @@
         <header class="app-header">
             <!-- Main heading displaying the application title -->
             <h1 class="main-title">Academic Countdown Tracker</h1>
-            <!-- Subtitle explaining the purpose: tracking lectures, tests, and examinations -->
-            <p class="subtitle">Keep track of your Lectures, Tests, and Examinations with live countdowns</p>
+            <!-- Subtitle explaining the purpose: tracking lectures, tests, exams, and assignment deadlines -->
+            <p class="subtitle">Keep track of your Lectures, Tests, Examinations, and Assignment Deadlines with live countdowns</p>
         </header>
 
         <!-- Section 1: Form container where students can enter and add a new academic event -->
         <section class="form-section">
             <!-- Section title for the add item form -->
-            <h2 class="section-title">Add New Academic Event</h2>
+            <h2 class="section-title">Add New Academic Event / Deadline</h2>
 
             <!-- The HTML form element capturing user inputs for new events -->
             <form id="trackerForm">
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <!-- Label for the category selection dropdown -->
                     <label for="categoryInput">Category *</label>
-                    <!-- Dropdown selector offering Lecture, Test, and Examination options -->
+                    <!-- Dropdown selector offering Lecture, Test, Examination, and Assignment options -->
                     <select id="categoryInput" required>
                         <!-- Default placeholder option directing the user to choose -->
                         <option value="">-- Select Category --</option>
@@ -49,40 +49,42 @@
                         <option value="Test">Test</option>
                         <!-- Option for Examination events -->
                         <option value="Examination">Examination</option>
+                        <!-- Option for Assignment Submission Deadline -->
+                        <option value="Assignment">Assignment Submission</option>
                     </select>
                 </div>
 
                 <!-- Input group for entering the course code or event title -->
                 <div class="form-group">
                     <!-- Label for the course/event title input field -->
-                    <label for="titleInput">Course Code / Title *</label>
-                    <!-- Text input for student to type course name e.g. CSC 201 -->
-                    <input type="text" id="titleInput" placeholder="e.g. CSC 201 - Data Structures" required>
+                    <label for="titleInput">Course Code / Assignment Title *</label>
+                    <!-- Text input for student to type course name e.g. CSC 201 - Assignment 1 -->
+                    <input type="text" id="titleInput" placeholder="e.g. CSC 201 - Assignment 1 or Midterm Test" required>
                 </div>
 
                 <!-- Input group for optional venue or extra notes -->
                 <div class="form-group">
                     <!-- Label for the optional venue or note field -->
-                    <label for="venueInput">Venue / Room / Notes (Optional)</label>
-                    <!-- Text input for venue location, classroom, or Zoom link -->
-                    <input type="text" id="venueInput" placeholder="e.g. Lecture Hall B or Online Zoom">
+                    <label for="venueInput">Venue / Submission Portal / Notes (Optional)</label>
+                    <!-- Text input for venue location, classroom, or submission portal link -->
+                    <input type="text" id="venueInput" placeholder="e.g. Hall B, Canvas, Google Classroom, or Zoom">
                 </div>
 
                 <!-- Row container to place Date and Time inputs side by side neatly -->
                 <div class="form-row">
 
-                    <!-- Input group for the event date -->
+                    <!-- Input group for the event date or submission deadline date -->
                     <div class="form-group half-width">
                         <!-- Label for the date picker input -->
-                        <label for="dateInput">Date *</label>
+                        <label for="dateInput">Date / Due Date *</label>
                         <!-- HTML5 date picker input element -->
                         <input type="date" id="dateInput" required>
                     </div>
 
-                    <!-- Input group for the event start time -->
+                    <!-- Input group for the event start time or submission deadline time -->
                     <div class="form-group half-width">
                         <!-- Label for the time picker input -->
-                        <label for="timeInput">Start Time *</label>
+                        <label for="timeInput">Time / Due Time *</label>
                         <!-- HTML5 time picker input element -->
                         <input type="time" id="timeInput" required>
                     </div>
@@ -120,6 +122,8 @@
                         <option value="Test">Tests Only</option>
                         <!-- Filters and shows only Examinations -->
                         <option value="Examination">Examinations Only</option>
+                        <!-- Filters and shows only Assignment Submissions -->
+                        <option value="Assignment">Assignments Only</option>
                     </select>
                 </div>
 
@@ -136,7 +140,7 @@
                         <!-- Filters and shows only events starting within 30 minutes -->
                         <option value="Starting Soon">Starting Soon Only (< 30m)</option>
                         <!-- Filters and shows only events whose start time has passed -->
-                        <option value="Passed">Passed Only</option>
+                        <option value="Passed">Passed / Due Date Elapsed</option>
                     </select>
                 </div>
 
@@ -156,7 +160,7 @@
         <!-- Section 3: The dynamic list where countdown cards are rendered -->
         <section class="list-section">
             <!-- Section title for active countdown items -->
-            <h2 class="section-title">Active Academic Countdowns</h2>
+            <h2 class="section-title">Active Academic Countdowns & Deadlines</h2>
 
             <!-- Container element dynamically populated by JavaScript -->
             <div id="countdownList" class="countdown-list">

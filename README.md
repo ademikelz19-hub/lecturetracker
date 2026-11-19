@@ -1,30 +1,31 @@
-# Academic Countdown Tracker (Lectures, Tests, and Examinations)
+# Academic Countdown Tracker (Lectures, Tests, Examinations, and Assignments)
 
-A simple, beginner-friendly academic countdown web application built strictly with **pure HTML5, CSS3, and vanilla JavaScript**. It serves as a single source of truth for students to track upcoming **Lectures**, **Tests**, and **Examinations** with real-time countdown clocks and persistent browser storage.
+A simple, beginner-friendly academic countdown web application built strictly with **pure HTML5, CSS3, and vanilla JavaScript**. It serves as a single source of truth for students to track upcoming **Lectures**, **Tests**, **Examinations**, and **Assignment Submission Deadlines** with real-time countdown clocks and persistent browser storage.
 
 ---
 
 ## 🌟 Key Features
 
-1. **Three Academic Categories**:
+1. **Four Academic Categories**:
    - 🔵 **Lecture**: Blue accent styling and badge.
    - 🟠 **Test**: Amber accent styling and badge.
    - 🔴 **Examination**: Red accent styling and badge.
+   - 🟣 **Assignment Submission**: Purple accent styling and badge for homework/project due dates.
 
 2. **Real-Time Live Countdown**:
    - Calculates time remaining down to the exact second (`Days`, `Hours`, `Minutes`, `Seconds`) using `setInterval()` updating every 1000ms.
    - Status indicators:
-     - 🟢 **Upcoming**: Normal scheduled events in the future.
-     - 🟠 **Starting Soon**: Events starting within the next 30 minutes (< 30m).
-     - ⚪ **Passed**: Events whose scheduled start time has passed.
+     - 🟢 **Upcoming**: Normal scheduled events/deadlines in the future.
+     - 🟠 **Starting Soon**: Events starting or due within the next 30 minutes (< 30m).
+     - ⚪ **Passed**: Events or deadlines whose scheduled time has passed.
 
 3. **Filtering & Searching**:
-   - Filter by **Category**: All Categories, Lectures Only, Tests Only, Examinations Only.
+   - Filter by **Category**: All Categories, Lectures Only, Tests Only, Examinations Only, Assignments Only.
    - Filter by **Status**: All Statuses, Upcoming Only, Starting Soon Only, Passed Only.
    - Real-time counter showing visible vs. total saved events.
 
 4. **Add & Manage Events**:
-   - Form with input validation for required fields (Category, Title, Date, Time) and optional venue/notes.
+   - Form with input validation for required fields (Category, Title, Date, Time) and optional venue/submission portal notes.
    - Delete individual events with confirmation.
    - Clear All events button with confirmation warning.
 
@@ -56,7 +57,7 @@ No build tools, bundlers, or package managers (npm/yarn) are required.
 ### Option 1: Direct File Open
 1. Double-click `index.html` or right-click and choose **Open With -> Chrome / Firefox / Edge / Safari**.
 
-### Option 2: Using VS Code Live Server or Python HTTP Server
+### Option 2: Using Python HTTP Server or Live Server
 ```bash
 # If using Python:
 python -m http.server 8000

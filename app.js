@@ -115,12 +115,12 @@ function calculateCountdownInfo(dateString, timeString) {
     if (differenceMs <= 0) {
         // Sets status to Passed because the time has elapsed
         status = "Passed";
-        // Sets display text showing the event has concluded
-        countdownText = "Event has passed";
+        // Sets display text showing the event has concluded or deadline passed
+        countdownText = "Deadline / Event has passed";
     } else {
         // 30 minutes in milliseconds = 30 minutes * 60 seconds * 1000 milliseconds = 1,800,000 ms
         var thirtyMinutesMs = 30 * 60 * 1000;
-        // Checks if the event is scheduled to start within the next 30 minutes
+        // Checks if the event or deadline is scheduled within the next 30 minutes
         if (differenceMs <= thirtyMinutesMs) {
             // Flags item with urgent "Starting Soon" status
             status = "Starting Soon";
@@ -159,7 +159,7 @@ function calculateCountdownInfo(dateString, timeString) {
 // WHY IT IS NEEDED: Updates the user interface dynamically every second as time ticks
 // ==============================================================================
 function renderCountdownList() {
-    // Reads current value of category filter dropdown (All, Lecture, Test, Examination)
+    // Reads current value of category filter dropdown (All, Lecture, Test, Examination, Assignment)
     var selectedCategory = categoryFilter.value;
     // Reads current value of status filter dropdown (All, Upcoming, Starting Soon, Passed)
     var selectedStatus = statusFilter.value;
@@ -215,6 +215,8 @@ function renderCountdownList() {
                 card.classList.add("card-test");
             } else if (item.category === "Examination") {
                 card.classList.add("card-examination");
+            } else if (item.category === "Assignment") {
+                card.classList.add("card-assignment");
             }
 
             // Determines CSS class for the category badge pill
@@ -223,6 +225,8 @@ function renderCountdownList() {
                 categoryBadgeClass = "badge-test";
             } else if (item.category === "Examination") {
                 categoryBadgeClass = "badge-examination";
+            } else if (item.category === "Assignment") {
+                categoryBadgeClass = "badge-assignment";
             }
 
             // Determines CSS class for the status badge pill
@@ -239,16 +243,18 @@ function renderCountdownList() {
                 timerValueClass = "timer-value timer-passed";
             }
 
-            // Formats display string for optional venue or notes
+            // Formats display string for optional venue, portal, or notes
             var venueDisplay = "";
             if (item.venue && item.venue.trim() !== "") {
-                venueDisplay = "Venue / Notes: " + item.venue;
+                venueDisplay = "Venue / Portal / Notes: " + item.venue;
             } else {
-                venueDisplay = "Venue: Not specified";
+                venueDisplay = "Venue / Portal: Not specified";
             }
 
-            // Formats readable date and time string e.g. "Scheduled for: 2026-11-20 at 09:00"
-            var scheduleDisplay = "Scheduled: " + item.date + " at " + item.time;
+            // Determines descriptive label for date depending on whether it is an assignment
+            var dateLabel = (item.category === "Assignment") ? "Due Date: " : "Scheduled: ";
+            // Formats readable date and time string e.g. "Due Date: 2026-11-20 at 23:59"
+            var scheduleDisplay = dateLabel + item.date + " at " + item.time;
 
             // Builds internal card HTML content with template placeholders
             card.innerHTML =
@@ -283,7 +289,7 @@ function renderCountdownList() {
         // Assigns empty state styling class
         emptyNotice.className = "empty-state";
         // Provides helpful friendly message explaining why list is blank
-        emptyNotice.textContent = "No academic countdown items match your current filter selection. Add an event above!";
+        emptyNotice.textContent = "No academic countdown items match your current filter selection. Add an event or deadline above!";
         // Appends notice into the list container
         countdownList.appendChild(emptyNotice);
     }
@@ -351,7 +357,7 @@ function removeItemById(targetId) {
 // ==============================================================================
 // FUNCTION: handleFormSubmit
 // WHAT IT DOES: Validates form input, creates new item object, saves and resets form
-// WHY IT IS NEEDED: Handles student adding a new Lecture, Test, or Exam
+// WHY IT IS NEEDED: Handles student adding a new Lecture, Test, Exam, or Assignment
 // ==============================================================================
 function handleFormSubmit(event) {
     // Prevents standard browser page reload behavior on form submission
@@ -374,28 +380,28 @@ function handleFormSubmit(event) {
 
     // Validation Check 1: Ensure Category is selected
     if (categoryValue === "") {
-        formErrorMessage.textContent = "Please select a category (Lecture, Test, or Examination).";
+        formErrorMessage.textContent = "Please select a category (Lecture, Test, Examination, or Assignment).";
         formErrorMessage.style.display = "block";
         return;
     }
 
     // Validation Check 2: Ensure Course Title is filled
     if (titleValue === "") {
-        formErrorMessage.textContent = "Please enter a course code or event title.";
+        formErrorMessage.textContent = "Please enter a course code or event/assignment title.";
         formErrorMessage.style.display = "block";
         return;
     }
 
     // Validation Check 3: Ensure Date is selected
     if (dateValue === "") {
-        formErrorMessage.textContent = "Please select a valid event date.";
+        formErrorMessage.textContent = "Please select a valid event date or due date.";
         formErrorMessage.style.display = "block";
         return;
     }
 
     // Validation Check 4: Ensure Time is selected
     if (timeValue === "") {
-        formErrorMessage.textContent = "Please select a valid start time.";
+        formErrorMessage.textContent = "Please select a valid start time or due time.";
         formErrorMessage.style.display = "block";
         return;
     }
