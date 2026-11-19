@@ -1,0 +1,640 @@
+/* CSS Reset: Universal selector resets margin, padding, and box-sizing across all browsers */
+* {
+    /* Ensures padding and border are included in element's total width and height calculations */
+    box-sizing: border-box;
+    /* Removes browser default margins so spacing is consistent and predictable */
+    margin: 0;
+    /* Removes browser default padding so spacing is consistent and predictable */
+    padding: 0;
+}
+
+/* Base Body Styles: Sets up fonts, page background, and text colors */
+body {
+    /* Uses a clean, modern, readable sans-serif font stack standard across operating systems */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Sets a pleasant, soft, light-slate background to reduce eye strain */
+    background-color: #f1f5f9;
+    /* Dark charcoal text color ensures high contrast and clear readability */
+    color: #1e293b;
+    /* Improves readability with a comfortable line height spacing */
+    line-height: 1.6;
+    /* Adds top and bottom breathing room around the page content */
+    padding: 24px 16px;
+}
+
+/* Main Container: Centers the application and constrains width for both desktop and mobile */
+.app-container {
+    /* Maximum width so content does not stretch too wide on desktop monitors */
+    max-width: 900px;
+    /* Centers the container horizontally on the page */
+    margin: 0 auto;
+}
+
+/* Header Section: Styles the top banner with titles */
+.app-header {
+    /* Centers title and subtitle text */
+    text-align: center;
+    /* Adds bottom margin separating header from the input form */
+    margin-bottom: 24px;
+}
+
+/* Main Title: Large primary heading styling */
+.main-title {
+    /* Large font size to establish strong visual hierarchy */
+    font-size: 2rem;
+    /* Bold weight so the title stands out clearly */
+    font-weight: 700;
+    /* Deep navy blue color matching an academic theme */
+    color: #1e3a8a;
+    /* Small bottom margin separating title from subtitle */
+    margin-bottom: 6px;
+}
+
+/* Subtitle: Explanatory text under main heading */
+.subtitle {
+    /* Slightly smaller font size than main text for hierarchy */
+    font-size: 0.95rem;
+    /* Muted slate gray color indicating secondary supporting text */
+    color: #64748b;
+}
+
+/* Common Section Container: Standard white card wrapper used across all sections */
+.form-section,
+.controls-section,
+.list-section {
+    /* Crisp white background for the cards */
+    background-color: #ffffff;
+    /* Soft rounded corners for a modern, approachable card look */
+    border-radius: 12px;
+    /* Generous internal spacing inside each section */
+    padding: 20px;
+    /* Separation distance between consecutive sections */
+    margin-bottom: 20px;
+    /* Subtle box shadow to give card-like elevation off the page background */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    /* Subtle border outline for crisp element definition */
+    border: 1px solid #e2e8f0;
+}
+
+/* Section Titles: Headers inside form, controls, and list cards */
+.section-title {
+    /* Medium heading size for section titles */
+    font-size: 1.25rem;
+    /* Semi-bold text styling */
+    font-weight: 600;
+    /* Slate blue heading color */
+    color: #0f172a;
+    /* Bottom margin separating title from inputs or items */
+    margin-bottom: 16px;
+    /* Subtle divider line underneath section titles */
+    border-bottom: 2px solid #f1f5f9;
+    /* Padding between title text and the bottom divider line */
+    padding-bottom: 8px;
+}
+
+/* Form Group: Wrapper for each label and input pair */
+.form-group {
+    /* Stacks elements vertically */
+    display: flex;
+    /* Direction of stacked items is top to bottom */
+    flex-direction: column;
+    /* Space between each form field */
+    margin-bottom: 14px;
+}
+
+/* Form Row: Displays date and time inputs side-by-side */
+.form-row {
+    /* Uses CSS flexbox to place children in a horizontal row */
+    display: flex;
+    /* Allows items to wrap onto the next line on narrow mobile screens */
+    flex-wrap: wrap;
+    /* Space between the side-by-side columns */
+    gap: 16px;
+}
+
+/* Half Width Column inside Form Row */
+.half-width {
+    /* Allows column to grow to fill space */
+    flex: 1;
+    /* Minimum width before wrapping occurs on small screens */
+    min-width: 220px;
+}
+
+/* Form Labels: Directs students on what each field represents */
+.form-group label {
+    /* Slightly smaller font for input field labels */
+    font-size: 0.875rem;
+    /* Medium bold for clear readability */
+    font-weight: 600;
+    /* Slate gray color for labels */
+    color: #334155;
+    /* Small spacing between label and input box */
+    margin-bottom: 6px;
+}
+
+/* Form Input and Select Controls: Common styling for all form fields */
+.form-group input,
+.form-group select,
+.filter-item select {
+    /* Full width of the parent container */
+    width: 100%;
+    /* Comfortable internal padding for easy clicking and typing */
+    padding: 10px 12px;
+    /* Standard font size matching body text */
+    font-size: 0.95rem;
+    /* Clean rounded border corners */
+    border-radius: 8px;
+    /* Soft light-gray border */
+    border: 1px solid #cbd5e1;
+    /* Solid white background */
+    background-color: #ffffff;
+    /* Charcoal text color */
+    color: #0f172a;
+    /* Smooth transition animation when focusing inputs */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Input and Select Focus State: Highlights active input when clicked or tabbed */
+.form-group input:focus,
+.form-group select:focus,
+.filter-item select:focus {
+    /* Removes default browser outline ring */
+    outline: none;
+    /* Highlights border with primary blue when focused */
+    border-color: #2563eb;
+    /* Adds a gentle blue glow around the input */
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Error Message Banner: Displays validation feedback when required fields are empty */
+.error-message {
+    /* Crimson red color for error text */
+    color: #dc2626;
+    /* Light reddish-pink background for error notice */
+    background-color: #fef2f2;
+    /* Border matching warning shade */
+    border: 1px solid #fecaca;
+    /* Rounded corners for the error box */
+    border-radius: 6px;
+    /* Padding around error text */
+    padding: 8px 12px;
+    /* Smaller text for error details */
+    font-size: 0.875rem;
+    /* Bottom spacing before the submit button */
+    margin-bottom: 14px;
+    /* Hidden by default until JavaScript populates it with error text */
+    display: none;
+}
+
+/* Primary Button: Used for adding new countdown items */
+.primary-btn {
+    /* Full width button across form */
+    width: 100%;
+    /* Primary royal blue background color */
+    background-color: #2563eb;
+    /* High contrast white text */
+    color: #ffffff;
+    /* Removes default button border */
+    border: none;
+    /* Comfortable vertical and horizontal padding */
+    padding: 12px 18px;
+    /* Font size for clear button text */
+    font-size: 1rem;
+    /* Bold text weight for emphasis */
+    font-weight: 600;
+    /* Rounded modern button corners */
+    border-radius: 8px;
+    /* Shows hand pointer cursor on mouse hover */
+    cursor: pointer;
+    /* Smooth background color transition on hover */
+    transition: background-color 0.2s;
+}
+
+/* Primary Button Hover State: Slightly darker blue when user moves mouse over it */
+.primary-btn:hover {
+    /* Darker shade of royal blue on hover */
+    background-color: #1d4ed8;
+}
+
+/* Danger Button: Used for clearing all items or deleting */
+.danger-btn {
+    /* Warm crimson red background */
+    background-color: #ef4444;
+    /* White text color for readability */
+    color: #ffffff;
+    /* Removes default button border */
+    border: none;
+    /* Padding inside danger button */
+    padding: 10px 14px;
+    /* Slightly smaller font for auxiliary button */
+    font-size: 0.9rem;
+    /* Medium bold text weight */
+    font-weight: 600;
+    /* Rounded corners */
+    border-radius: 8px;
+    /* Pointer cursor on hover */
+    cursor: pointer;
+    /* Smooth background color transition on hover */
+    transition: background-color 0.2s;
+}
+
+/* Danger Button Hover State: Darker red when mouse is hovered */
+.danger-btn:hover {
+    /* Darker crimson red on hover */
+    background-color: #dc2626;
+}
+
+/* Filters Container: Wraps category and status filters alongside clear button */
+.filters-container {
+    /* Uses flexbox layout to line up filter inputs horizontally */
+    display: flex;
+    /* Allows filters to wrap onto a new line on smaller mobile screens */
+    flex-wrap: wrap;
+    /* Space between filter items */
+    gap: 16px;
+    /* Vertically aligns dropdowns and buttons */
+    align-items: flex-end;
+    /* Bottom spacing before counter summary text */
+    margin-bottom: 12px;
+}
+
+/* Individual Filter Item Container */
+.filter-item {
+    /* Allows filter items to flex and fill space evenly */
+    flex: 1;
+    /* Minimum width to prevent inputs from shrinking too small */
+    min-width: 180px;
+    /* Displays label and select vertically */
+    display: flex;
+    /* Column direction for filter item */
+    flex-direction: column;
+}
+
+/* Filter Item Label */
+.filter-item label {
+    /* Smaller text for filter labels */
+    font-size: 0.85rem;
+    /* Semi-bold text */
+    font-weight: 600;
+    /* Charcoal slate text color */
+    color: #475569;
+    /* Small margin separating label from dropdown */
+    margin-bottom: 4px;
+}
+
+/* Clear Action Wrapper: Positions the Clear All button */
+.clear-action {
+    /* Keeps clear button aligned nicely */
+    flex: 0 0 auto;
+}
+
+/* Summary Counter: Displays count of filtered / total items */
+.counter-summary {
+    /* Small font size for secondary summary text */
+    font-size: 0.875rem;
+    /* Slate gray color for summary */
+    color: #64748b;
+    /* Semi-bold font for clarity */
+    font-weight: 500;
+}
+
+/* Countdown List Container: Holds all dynamically generated countdown cards */
+.countdown-list {
+    /* Stacks cards vertically */
+    display: flex;
+    /* Column layout for item cards */
+    flex-direction: column;
+    /* Gap spacing between each countdown card */
+    gap: 14px;
+}
+
+/* Empty State Box: Shown when no countdown items exist or match filters */
+.empty-state {
+    /* Centers text inside the empty state message box */
+    text-align: center;
+    /* Generous vertical padding for empty state */
+    padding: 36px 16px;
+    /* Muted gray text color */
+    color: #94a3b8;
+    /* Medium text size */
+    font-size: 1rem;
+    /* Dashed border indicating empty drop area */
+    border: 2px dashed #cbd5e1;
+    /* Rounded corners */
+    border-radius: 8px;
+    /* Very light gray background */
+    background-color: #f8fafc;
+}
+
+/* Individual Countdown Card: Main card styling for each academic item */
+.countdown-card {
+    /* Pure white background for each card */
+    background-color: #ffffff;
+    /* Rounded modern corners for cards */
+    border-radius: 10px;
+    /* Crisp border outlining the card */
+    border: 1px solid #e2e8f0;
+    /* Padding inside each countdown card */
+    padding: 16px;
+    /* Smooth transition for hover effects */
+    transition: transform 0.15s, box-shadow 0.15s;
+    /* Thick left indicator border that changes color based on category */
+    border-left: 6px solid #2563eb;
+    /* Flexbox layout to structure internal content */
+    display: flex;
+    /* Column direction inside card */
+    flex-direction: column;
+    /* Gap between internal elements */
+    gap: 10px;
+}
+
+/* Card Hover State: Subtle lift effect on mouse hover */
+.countdown-card:hover {
+    /* Slight lift elevation */
+    transform: translateY(-2px);
+    /* Deeper shadow when hovered */
+    box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.08);
+}
+
+/* Specific Category Left Border Colors */
+.card-lecture {
+    /* Blue left accent for Lectures */
+    border-left-color: #3b82f6;
+}
+.card-test {
+    /* Amber/Orange left accent for Tests */
+    border-left-color: #f59e0b;
+}
+.card-examination {
+    /* Crimson/Red left accent for Examinations */
+    border-left-color: #ef4444;
+}
+
+/* Card Header: Top row of card containing Category Badge and Status Badge */
+.card-header {
+    /* Flex layout to place badges on opposite ends */
+    display: flex;
+    /* Distributes space between category badge and status badge */
+    justify-content: space-between;
+    /* Vertically centers badges */
+    align-items: center;
+    /* Allows wrapping on very narrow screens */
+    flex-wrap: wrap;
+    /* Small gap between badges */
+    gap: 8px;
+}
+
+/* Category Badge: Displays whether item is Lecture, Test, or Examination */
+.category-badge {
+    /* Small font size for badge */
+    font-size: 0.75rem;
+    /* Bold uppercase text for clean pill look */
+    font-weight: 700;
+    /* Uppercase transformation */
+    text-transform: uppercase;
+    /* Letter spacing for readability */
+    letter-spacing: 0.05em;
+    /* Padding inside badge pill */
+    padding: 4px 10px;
+    /* Fully rounded pill corners */
+    border-radius: 9999px;
+}
+
+/* Lecture Badge Color Style */
+.badge-lecture {
+    /* Light blue background */
+    background-color: #eff6ff;
+    /* Deep blue text */
+    color: #1d4ed8;
+    /* Blue outline */
+    border: 1px solid #bfdbfe;
+}
+
+/* Test Badge Color Style */
+.badge-test {
+    /* Light amber background */
+    background-color: #fffbeb;
+    /* Deep amber text */
+    color: #b45309;
+    /* Amber outline */
+    border: 1px solid #fde68a;
+}
+
+/* Examination Badge Color Style */
+.badge-examination {
+    /* Light rose/red background */
+    background-color: #fef2f2;
+    /* Deep red text */
+    color: #b91c1c;
+    /* Red outline */
+    border: 1px solid #fecaca;
+}
+
+/* Status Badge: Displays "Upcoming", "Starting Soon", or "Passed" */
+.status-badge {
+    /* Small font size for status pill */
+    font-size: 0.75rem;
+    /* Semi-bold weight */
+    font-weight: 600;
+    /* Padding inside pill */
+    padding: 4px 10px;
+    /* Fully rounded pill shape */
+    border-radius: 9999px;
+}
+
+/* Status: Upcoming Style */
+.status-upcoming {
+    /* Light emerald green background */
+    background-color: #ecfdf5;
+    /* Dark green text */
+    color: #047857;
+    /* Emerald outline */
+    border: 1px solid #a7f3d0;
+}
+
+/* Status: Starting Soon Style (< 30 minutes away) */
+.status-soon {
+    /* Light orange background */
+    background-color: #fff7ed;
+    /* Dark orange text */
+    color: #c2410c;
+    /* Orange outline */
+    border: 1px solid #fed7aa;
+}
+
+/* Status: Passed Style (Target time already elapsed) */
+.status-passed {
+    /* Light gray background */
+    background-color: #f1f5f9;
+    /* Slate gray text */
+    color: #64748b;
+    /* Gray outline */
+    border: 1px solid #cbd5e1;
+}
+
+/* Card Body: Contains title, venue, and date details */
+.card-body {
+    /* Stacks title and details */
+    display: flex;
+    /* Column direction */
+    flex-direction: column;
+    /* Small gap between details */
+    gap: 4px;
+}
+
+/* Card Title: Course name and code */
+.card-title {
+    /* Strong font size for event name */
+    font-size: 1.15rem;
+    /* Bold weight */
+    font-weight: 700;
+    /* Dark charcoal color */
+    color: #0f172a;
+}
+
+/* Card Venue: Location or Zoom link */
+.card-venue {
+    /* Small font size for secondary detail */
+    font-size: 0.875rem;
+    /* Slate gray color */
+    color: #475569;
+}
+
+/* Card Date and Time text */
+.card-datetime {
+    /* Small font size */
+    font-size: 0.875rem;
+    /* Muted slate color */
+    color: #64748b;
+    /* Medium font weight */
+    font-weight: 500;
+}
+
+/* Card Countdown Display: Shows the live ticking timer (Days, Hours, Minutes, Seconds) */
+.card-timer-container {
+    /* Very light gray background highlighting the timer box */
+    background-color: #f8fafc;
+    /* Rounded corners for the countdown display */
+    border-radius: 8px;
+    /* Internal padding inside timer box */
+    padding: 10px;
+    /* Subtle border around timer */
+    border: 1px solid #e2e8f0;
+    /* Centers timer text */
+    text-align: center;
+    /* Vertical margin separating timer from buttons */
+    margin: 4px 0;
+}
+
+/* Timer Value Text: Monospace font ensures digits do not wobble as numbers change */
+.timer-value {
+    /* Monospace font so each number has equal width */
+    font-family: "Courier New", Courier, monospace;
+    /* Prominent large font size for the countdown */
+    font-size: 1.35rem;
+    /* Extra bold weight */
+    font-weight: 700;
+    /* Deep navy text */
+    color: #1e3a8a;
+    /* Letter spacing for clean readability */
+    letter-spacing: 0.05em;
+}
+
+/* Passed Timer Value Styling */
+.timer-passed {
+    /* Muted gray color when event has elapsed */
+    color: #94a3b8;
+    /* Slightly smaller font for passed note */
+    font-size: 1.1rem;
+}
+
+/* Card Footer: Contains delete button aligned to the right */
+.card-footer {
+    /* Flexbox layout to align delete button */
+    display: flex;
+    /* Pushes button to right edge */
+    justify-content: flex-end;
+}
+
+/* Delete Item Button: Red outline button for deleting individual countdowns */
+.delete-item-btn {
+    /* Transparent background initially */
+    background-color: transparent;
+    /* Red text matching danger tone */
+    color: #ef4444;
+    /* Red outline border */
+    border: 1px solid #ef4444;
+    /* Compact padding */
+    padding: 6px 12px;
+    /* Small text size */
+    font-size: 0.8rem;
+    /* Semi-bold text */
+    font-weight: 600;
+    /* Rounded button corners */
+    border-radius: 6px;
+    /* Pointer cursor on hover */
+    cursor: pointer;
+    /* Smooth color transition on hover */
+    transition: all 0.2s;
+}
+
+/* Delete Item Button Hover State */
+.delete-item-btn:hover {
+    /* Fills button with red on hover */
+    background-color: #ef4444;
+    /* Turns text white for high contrast */
+    color: #ffffff;
+}
+
+/* Footer Section: Small copyright and tech stack note at bottom */
+.app-footer {
+    /* Centers footer text */
+    text-align: center;
+    /* Top margin to separate from content */
+    margin-top: 30px;
+    /* Bottom margin */
+    margin-bottom: 20px;
+    /* Small footer text */
+    font-size: 0.8rem;
+    /* Slate gray color */
+    color: #94a3b8;
+}
+
+/* Mobile Responsive Adjustments for screen widths below 600px */
+@media (max-width: 600px) {
+    /* Adjusts page body padding on smaller mobile screens */
+    body {
+        /* Reduces horizontal and vertical padding on phones */
+        padding: 14px 10px;
+    }
+
+    /* Scales down main header title for mobile viewports */
+    .main-title {
+        /* Compact heading size for mobile screens */
+        font-size: 1.5rem;
+    }
+
+    /* Forces form columns to take full width on phone screens */
+    .half-width {
+        /* Full width for mobile rows */
+        min-width: 100%;
+    }
+
+    /* Filters wrap and take full width on phone screens */
+    .filter-item {
+        /* Full width for each filter control on mobile */
+        min-width: 100%;
+    }
+
+    /* Primary and danger buttons stretch to full width on mobile */
+    .clear-action {
+        /* Full width for clear all button container */
+        width: 100%;
+    }
+
+    /* Clear all button takes full width on mobile */
+    .clear-action button {
+        /* Full width clear button */
+        width: 100%;
+    }
+}

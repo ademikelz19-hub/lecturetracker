@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!-- This declares the document type as standard modern HTML5 so web browsers render it correctly -->
+<html lang="en">
+<!-- The root element of the HTML page, setting the primary language to English -->
+<head>
+    <!-- The head section contains metadata, title, and links to stylesheets for the browser -->
+    <meta charset="UTF-8">
+    <!-- Sets character encoding to UTF-8 so international letters, numbers, and symbols display properly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensures proper scaling and responsive rendering on mobile devices and desktop screens -->
+    <title>Academic Countdown Tracker</title>
+    <!-- The title displayed on the browser tab for this academic web application -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Links this HTML document to our external stylesheet (style.css) for clean styling -->
+</head>
+<!-- The body contains all visible UI elements shown to the student on the webpage -->
+<body>
+
+    <!-- Main wrapper container that centers the entire application on the screen -->
+    <div class="app-container">
+
+        <!-- Header section with the main title and brief description of the tracker -->
+        <header class="app-header">
+            <!-- Main heading displaying the application title -->
+            <h1 class="main-title">Academic Countdown Tracker</h1>
+            <!-- Subtitle explaining the purpose: tracking lectures, tests, and examinations -->
+            <p class="subtitle">Keep track of your Lectures, Tests, and Examinations with live countdowns</p>
+        </header>
+
+        <!-- Section 1: Form container where students can enter and add a new academic event -->
+        <section class="form-section">
+            <!-- Section title for the add item form -->
+            <h2 class="section-title">Add New Academic Event</h2>
+
+            <!-- The HTML form element capturing user inputs for new events -->
+            <form id="trackerForm">
+
+                <!-- Input group for selecting the academic category -->
+                <div class="form-group">
+                    <!-- Label for the category selection dropdown -->
+                    <label for="categoryInput">Category *</label>
+                    <!-- Dropdown selector offering Lecture, Test, and Examination options -->
+                    <select id="categoryInput" required>
+                        <!-- Default placeholder option directing the user to choose -->
+                        <option value="">-- Select Category --</option>
+                        <!-- Option for Lecture events -->
+                        <option value="Lecture">Lecture</option>
+                        <!-- Option for Test events -->
+                        <option value="Test">Test</option>
+                        <!-- Option for Examination events -->
+                        <option value="Examination">Examination</option>
+                    </select>
+                </div>
+
+                <!-- Input group for entering the course code or event title -->
+                <div class="form-group">
+                    <!-- Label for the course/event title input field -->
+                    <label for="titleInput">Course Code / Title *</label>
+                    <!-- Text input for student to type course name e.g. CSC 201 -->
+                    <input type="text" id="titleInput" placeholder="e.g. CSC 201 - Data Structures" required>
+                </div>
+
+                <!-- Input group for optional venue or extra notes -->
+                <div class="form-group">
+                    <!-- Label for the optional venue or note field -->
+                    <label for="venueInput">Venue / Room / Notes (Optional)</label>
+                    <!-- Text input for venue location, classroom, or Zoom link -->
+                    <input type="text" id="venueInput" placeholder="e.g. Lecture Hall B or Online Zoom">
+                </div>
+
+                <!-- Row container to place Date and Time inputs side by side neatly -->
+                <div class="form-row">
+
+                    <!-- Input group for the event date -->
+                    <div class="form-group half-width">
+                        <!-- Label for the date picker input -->
+                        <label for="dateInput">Date *</label>
+                        <!-- HTML5 date picker input element -->
+                        <input type="date" id="dateInput" required>
+                    </div>
+
+                    <!-- Input group for the event start time -->
+                    <div class="form-group half-width">
+                        <!-- Label for the time picker input -->
+                        <label for="timeInput">Start Time *</label>
+                        <!-- HTML5 time picker input element -->
+                        <input type="time" id="timeInput" required>
+                    </div>
+
+                </div>
+
+                <!-- Container to display validation error messages if required fields are missing -->
+                <div id="formErrorMessage" class="error-message"></div>
+
+                <!-- Submit button that triggers saving the new academic countdown item -->
+                <button type="submit" id="submitBtn" class="primary-btn">Add Countdown Item</button>
+
+            </form>
+        </section>
+
+        <!-- Section 2: Controls for filtering and managing items -->
+        <section class="controls-section">
+            <!-- Section title for filtering and management -->
+            <h2 class="section-title">Filter & Search Events</h2>
+
+            <!-- Container for filter dropdown controls -->
+            <div class="filters-container">
+
+                <!-- Filter group for selecting which category to display -->
+                <div class="filter-item">
+                    <!-- Label for the category filter -->
+                    <label for="categoryFilter">Category:</label>
+                    <!-- Dropdown for filtering list by category -->
+                    <select id="categoryFilter">
+                        <!-- Shows all categories without filtering -->
+                        <option value="All">All Categories</option>
+                        <!-- Filters and shows only Lectures -->
+                        <option value="Lecture">Lectures Only</option>
+                        <!-- Filters and shows only Tests -->
+                        <option value="Test">Tests Only</option>
+                        <!-- Filters and shows only Examinations -->
+                        <option value="Examination">Examinations Only</option>
+                    </select>
+                </div>
+
+                <!-- Filter group for selecting time status (Upcoming, Soon, Passed) -->
+                <div class="filter-item">
+                    <!-- Label for the time status filter -->
+                    <label for="statusFilter">Status:</label>
+                    <!-- Dropdown for filtering list by time status -->
+                    <select id="statusFilter">
+                        <!-- Shows all items regardless of time status -->
+                        <option value="All">All Statuses</option>
+                        <!-- Filters and shows only items that have not yet occurred -->
+                        <option value="Upcoming">Upcoming Only</option>
+                        <!-- Filters and shows only events starting within 30 minutes -->
+                        <option value="Starting Soon">Starting Soon Only (< 30m)</option>
+                        <!-- Filters and shows only events whose start time has passed -->
+                        <option value="Passed">Passed Only</option>
+                    </select>
+                </div>
+
+                <!-- Action button to wipe/clear all saved items with confirmation -->
+                <div class="filter-item clear-action">
+                    <!-- Button to clear all records from localStorage -->
+                    <button type="button" id="clearAllBtn" class="danger-btn">Clear All Items</button>
+                </div>
+
+            </div>
+
+            <!-- Summary counter showing how many items are currently displayed -->
+            <div id="counterSummary" class="counter-summary">Total Items: 0</div>
+
+        </section>
+
+        <!-- Section 3: The dynamic list where countdown cards are rendered -->
+        <section class="list-section">
+            <!-- Section title for active countdown items -->
+            <h2 class="section-title">Active Academic Countdowns</h2>
+
+            <!-- Container element dynamically populated by JavaScript -->
+            <div id="countdownList" class="countdown-list">
+                <!-- Javascript will inject event countdown cards or an empty state message here -->
+            </div>
+        </section>
+
+        <!-- Footer section acknowledging the student project and persistent storage -->
+        <footer class="app-footer">
+            <!-- Informational message for lecturers and students -->
+            <p>Academic Countdown Tracker &bull; Built with Pure HTML, CSS & Vanilla JavaScript &bull; Saves in LocalStorage</p>
+        </footer>
+
+    </div>
+
+    <!-- Links our JavaScript file (app.js) to execute application logic after HTML has loaded -->
+    <script src="app.js"></script>
+</body>
+</html>
