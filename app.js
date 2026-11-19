@@ -34,6 +34,9 @@ var categoryFilter = document.getElementById("categoryFilter");
 // DOM Element: Reference to the Status filter dropdown select control
 var statusFilter = document.getElementById("statusFilter");
 
+// DOM Element: Reference to the button that plays a preview audio alert chime
+var testSoundBtn = document.getElementById("testSoundBtn");
+
 // DOM Element: Reference to the Clear All button that resets all data
 var clearAllBtn = document.getElementById("clearAllBtn");
 
@@ -45,6 +48,69 @@ var countdownList = document.getElementById("countdownList");
 
 // Constant: The key name used to store and retrieve data from browser localStorage
 var STORAGE_KEY = "academic_countdown_tracker_data";
+
+// ==============================================================================
+// FUNCTION: playNotificationSound
+// WHAT IT DOES: Plays a pleasant chime sound using the browser's built-in Web Audio API
+// WHY IT IS NEEDED: Alerts students with audio when an academic countdown reaches zero
+// ==============================================================================
+function playNotificationSound() {
+    try {
+        // Checks if AudioContext is supported by this browser
+        var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        // If the browser does not support Web Audio, exit safely
+        if (!AudioContextClass) {
+            return;
+        }
+        // Creates a new AudioContext instance to generate synthesized sound
+        var audioContext = new AudioContextClass();
+
+        // Note 1: First chime tone frequency in Hertz (A5 = 880Hz)
+        var oscillator1 = audioContext.createOscillator();
+        // Creates a gain node to control sound volume and prevent ear clipping
+        var gainNode1 = audioContext.createGain();
+        // Uses a smooth sine wave for a pleasant, clean bell chime sound
+        oscillator1.type = "sine";
+        // Sets pitch of first note to 880 Hertz
+        oscillator1.frequency.setValueAtTime(880, audioContext.currentTime);
+        // Sets comfortable gentle volume (20% maximum)
+        gainNode1.gain.setValueAtTime(0.2, audioContext.currentTime);
+        // Gradually fades out note volume over 0.4 seconds
+        gainNode1.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.4);
+        // Connects oscillator to gain node
+        oscillator1.connect(gainNode1);
+        // Connects gain node to speaker output destination
+        gainNode1.connect(audioContext.destination);
+        // Starts playing the first chime tone immediately
+        oscillator1.start(audioContext.currentTime);
+        // Stops first tone after 0.4 seconds
+        oscillator1.stop(audioContext.currentTime + 0.4);
+
+        // Note 2: Higher second chime tone frequency (C#6 = 1108.73Hz) playing shortly after
+        var oscillator2 = audioContext.createOscillator();
+        // Creates second gain node for volume envelope of second tone
+        var gainNode2 = audioContext.createGain();
+        // Uses sine wave for musical harmony
+        oscillator2.type = "sine";
+        // Sets pitch of higher second note
+        oscillator2.frequency.setValueAtTime(1108.73, audioContext.currentTime + 0.15);
+        // Sets volume for second tone
+        gainNode2.gain.setValueAtTime(0.25, audioContext.currentTime + 0.15);
+        // Gradually fades out higher note over 0.6 seconds
+        gainNode2.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.75);
+        // Connects oscillator 2 to gain node 2
+        oscillator2.connect(gainNode2);
+        // Connects gain node 2 to speaker output
+        gainNode2.connect(audioContext.destination);
+        // Starts second tone slightly delayed for a pleasant two-tone chime
+        oscillator2.start(audioContext.currentTime + 0.15);
+        // Stops second tone after 0.75 seconds
+        oscillator2.stop(audioContext.currentTime + 0.75);
+    } catch (error) {
+        // Silently catch any audio permissions block without crashing app
+        console.log("Audio notification error: ", error);
+    }
+}
 
 // ==============================================================================
 // FUNCTION: loadItemsFromLocalStorage
@@ -145,10 +211,11 @@ function calculateCountdownInfo(dateString, timeString) {
                         formatTwoDigits(seconds) + "s";
     }
 
-    // Returns an object containing both the status tag and formatted countdown string
+    // Returns an object containing status, formatted countdown, and difference in ms
     return {
         status: status,
         countdownText: countdownText,
+        differenceMs: differenceMs,
         targetDateObj: targetDate
     };
 }
@@ -170,6 +237,9 @@ function renderCountdownList() {
     // Counter variable to keep track of how many cards are actively displayed
     var visibleItemCount = 0;
 
+    // Tracks if an item's alert state changed so we can update localStorage once
+    var stateChanged = false;
+
     // Standard for-loop iterating through each item in our academicItems array
     for (var i = 0; i < academicItems.length; i++) {
         // Gets reference to current item object from the array
@@ -177,6 +247,19 @@ function renderCountdownList() {
 
         // Calculates current time remaining and status for this specific item
         var info = calculateCountdownInfo(item.date, item.time);
+
+        // Audio Alert Trigger: If countdown reached zero and hasn't played alert yet
+        if (info.differenceMs <= 0 && item.hasAlerted !== true) {
+            // Only chime if the event expired recently while app was active (within last 10 seconds)
+            if (info.differenceMs > -10000) {
+                // Plays pleasant two-tone audio alert chime
+                playNotificationSound();
+            }
+            // Marks this item as alerted so it does not repeatedly chime every second
+            item.hasAlerted = true;
+            // Flags that storage needs updating
+            stateChanged = true;
+        }
 
         // Checks if current item matches the category filter condition
         var matchesCategory = false;
@@ -277,6 +360,11 @@ function renderCountdownList() {
             // Appends the newly assembled countdown card into the countdown list container
             countdownList.appendChild(card);
         }
+    }
+
+    // If an item alerted state changed, save array to localStorage to persist state
+    if (stateChanged === true) {
+        saveItemsToLocalStorage();
     }
 
     // Updates the summary counter text to reflect visible and total counts
@@ -406,6 +494,11 @@ function handleFormSubmit(event) {
         return;
     }
 
+    // Checks if the user added an event that is already in the past
+    var checkInfo = calculateCountdownInfo(dateValue, timeValue);
+    // If already passed, set hasAlerted = true so it does not beep immediately
+    var initialAlertState = (checkInfo.differenceMs <= 0);
+
     // Creates a new academic item object with a unique timestamp ID
     var newItem = {
         id: Date.now(),
@@ -413,7 +506,8 @@ function handleFormSubmit(event) {
         title: titleValue,
         venue: venueValue,
         date: dateValue,
-        time: timeValue
+        time: timeValue,
+        hasAlerted: initialAlertState
     };
 
     // Adds the new item to the beginning of the academicItems array (newest first)
@@ -456,7 +550,7 @@ function handleClearAll() {
 
 // ==============================================================================
 // INITIALIZATION & EVENT LISTENERS
-// WHAT IT DOES: Hooks up buttons, form submissions, filters, and timer loop
+// WHAT IT DOES: Hooks up buttons, form submissions, filters, audio test, and timer loop
 // WHY IT IS NEEDED: Wires all user interactions and starts live 1-second countdowns
 // ==============================================================================
 
@@ -481,6 +575,9 @@ categoryFilter.addEventListener("change", renderCountdownList);
 
 // Event Listener: Re-renders the list whenever the Status filter dropdown changes
 statusFilter.addEventListener("change", renderCountdownList);
+
+// Event Listener: Plays test chime sound when student clicks Test Sound button
+testSoundBtn.addEventListener("click", playNotificationSound);
 
 // Event Listener: Triggers handleClearAll when student clicks Clear All button
 clearAllBtn.addEventListener("click", handleClearAll);

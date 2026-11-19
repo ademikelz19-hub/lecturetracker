@@ -24,7 +24,7 @@
             <!-- Main heading displaying the application title -->
             <h1 class="main-title">Academic Countdown Tracker</h1>
             <!-- Subtitle explaining the purpose: tracking lectures, tests, exams, and assignment deadlines -->
-            <p class="subtitle">Keep track of your Lectures, Tests, Examinations, and Assignment Deadlines with live countdowns</p>
+            <p class="subtitle">Keep track of your Lectures, Tests, Examinations, and Assignment Deadlines with live countdowns & audio alerts</p>
         </header>
 
         <!-- Section 1: Form container where students can enter and add a new academic event -->
@@ -144,8 +144,18 @@
                     </select>
                 </div>
 
+                <!-- Audio alert test button container -->
+                <div class="filter-item audio-action">
+                    <!-- Label for audio alert tester -->
+                    <label>Audio Alert:</label>
+                    <!-- Button allowing user to test the notification sound -->
+                    <button type="button" id="testSoundBtn" class="secondary-btn">🔊 Test Sound</button>
+                </div>
+
                 <!-- Action button to wipe/clear all saved items with confirmation -->
                 <div class="filter-item clear-action">
+                    <!-- Label placeholder for proper alignment with other inputs -->
+                    <label>&nbsp;</label>
                     <!-- Button to clear all records from localStorage -->
                     <button type="button" id="clearAllBtn" class="danger-btn">Clear All Items</button>
                 </div>
@@ -171,7 +181,7 @@
         <!-- Footer section acknowledging the student project and persistent storage -->
         <footer class="app-footer">
             <!-- Informational message for lecturers and students -->
-            <p>Academic Countdown Tracker &bull; Built with Pure HTML, CSS & Vanilla JavaScript &bull; Saves in LocalStorage</p>
+            <p>Academic Countdown Tracker &bull; Built with Pure HTML, CSS & Vanilla JavaScript &bull; Saves in LocalStorage &bull; Live Audio Alerts</p>
         </footer>
 
     </div>

@@ -216,6 +216,36 @@ body {
     background-color: #1d4ed8;
 }
 
+/* Secondary Button: Used for testing audio notifications */
+.secondary-btn {
+    /* Pleasant slate-teal background */
+    background-color: #0d9488;
+    /* White text color */
+    color: #ffffff;
+    /* Removes default border */
+    border: none;
+    /* Padding matching other action buttons */
+    padding: 10px 14px;
+    /* Clean button font size */
+    font-size: 0.9rem;
+    /* Medium bold text weight */
+    font-weight: 600;
+    /* Rounded corners */
+    border-radius: 8px;
+    /* Pointer cursor on hover */
+    cursor: pointer;
+    /* Smooth transition */
+    transition: background-color 0.2s;
+    /* Full width inside its flex container */
+    width: 100%;
+}
+
+/* Secondary Button Hover State */
+.secondary-btn:hover {
+    /* Darker teal shade on hover */
+    background-color: #0f766e;
+}
+
 /* Danger Button: Used for clearing all items or deleting */
 .danger-btn {
     /* Warm crimson red background */
@@ -236,6 +266,8 @@ body {
     cursor: pointer;
     /* Smooth background color transition on hover */
     transition: background-color 0.2s;
+    /* Full width inside its container */
+    width: 100%;
 }
 
 /* Danger Button Hover State: Darker red when mouse is hovered */
@@ -244,7 +276,7 @@ body {
     background-color: #dc2626;
 }
 
-/* Filters Container: Wraps category and status filters alongside clear button */
+/* Filters Container: Wraps category, status, sound test, and clear buttons */
 .filters-container {
     /* Uses flexbox layout to line up filter inputs horizontally */
     display: flex;
@@ -263,7 +295,7 @@ body {
     /* Allows filter items to flex and fill space evenly */
     flex: 1;
     /* Minimum width to prevent inputs from shrinking too small */
-    min-width: 180px;
+    min-width: 160px;
     /* Displays label and select vertically */
     display: flex;
     /* Column direction for filter item */
@@ -282,10 +314,16 @@ body {
     margin-bottom: 4px;
 }
 
+/* Audio Action Wrapper */
+.audio-action {
+    /* Fixed flex basis for audio tester */
+    flex: 0 0 140px;
+}
+
 /* Clear Action Wrapper: Positions the Clear All button */
 .clear-action {
-    /* Keeps clear button aligned nicely */
-    flex: 0 0 auto;
+    /* Fixed flex basis for clear all button */
+    flex: 0 0 140px;
 }
 
 /* Summary Counter: Displays count of filtered / total items */
@@ -640,15 +678,15 @@ body {
         min-width: 100%;
     }
 
-    /* Primary and danger buttons stretch to full width on mobile */
-    .clear-action {
-        /* Full width for clear all button container */
+    /* Audio action button takes full width on mobile */
+    .audio-action {
+        /* Full width on phone */
         width: 100%;
     }
 
-    /* Clear all button takes full width on mobile */
-    .clear-action button {
-        /* Full width clear button */
+    /* Primary and danger buttons stretch to full width on mobile */
+    .clear-action {
+        /* Full width for clear all button container */
         width: 100%;
     }
 }

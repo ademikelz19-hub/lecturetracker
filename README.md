@@ -1,6 +1,6 @@
 # Academic Countdown Tracker (Lectures, Tests, Examinations, and Assignments)
 
-A simple, beginner-friendly academic countdown web application built strictly with **pure HTML5, CSS3, and vanilla JavaScript**. It serves as a single source of truth for students to track upcoming **Lectures**, **Tests**, **Examinations**, and **Assignment Submission Deadlines** with real-time countdown clocks and persistent browser storage.
+A simple, beginner-friendly academic countdown web application built strictly with **pure HTML5, CSS3, and vanilla JavaScript**. It serves as a single source of truth for students to track upcoming **Lectures**, **Tests**, **Examinations**, and **Assignment Submission Deadlines** with real-time countdown clocks, audio alerts, and persistent browser storage.
 
 ---
 
@@ -12,12 +12,14 @@ A simple, beginner-friendly academic countdown web application built strictly wi
    - 🔴 **Examination**: Red accent styling and badge.
    - 🟣 **Assignment Submission**: Purple accent styling and badge for homework/project due dates.
 
-2. **Real-Time Live Countdown**:
+2. **Real-Time Live Countdown & Audio Alert**:
    - Calculates time remaining down to the exact second (`Days`, `Hours`, `Minutes`, `Seconds`) using `setInterval()` updating every 1000ms.
+   - **Audible Notification Alert**: Automatically plays a clean, synthesized two-tone bell chime using the browser's native **Web Audio API** (no external audio files needed) the instant a countdown reaches zero.
+   - **🔊 Test Sound Button**: Allows students and lecturers to preview the audio alert on demand.
    - Status indicators:
      - 🟢 **Upcoming**: Normal scheduled events/deadlines in the future.
      - 🟠 **Starting Soon**: Events starting or due within the next 30 minutes (< 30m).
-     - ⚪ **Passed**: Events or deadlines whose scheduled time has passed.
+     - ⚪ **Passed**: Events or deadlines whose scheduled time has elapsed.
 
 3. **Filtering & Searching**:
    - Filter by **Category**: All Categories, Lectures Only, Tests Only, Examinations Only, Assignments Only.
@@ -44,7 +46,7 @@ A simple, beginner-friendly academic countdown web application built strictly wi
 tracker/
 ├── index.html       # HTML5 structure with semantic sections and line-by-line comments
 ├── style.css        # Responsive CSS styling with color badges and line-by-line comments
-├── app.js           # Vanilla JavaScript logic, timers, filters, and line-by-line comments
+├── app.js           # Vanilla JavaScript logic, audio synthesizer, timers, filters
 └── README.md        # Project documentation and lecturer defense guide
 ```
 
@@ -76,12 +78,17 @@ If your lecturer asks you about how the application works, here is a quick cheat
    - The difference in milliseconds is converted to Days, Hours, Minutes, and Seconds using `Math.floor()` and the modulo `%` operator.
    - `setInterval(renderCountdownList, 1000)` runs every second to update the numbers on screen continuously.
 
-2. **How does data stay saved when refreshing?**
+2. **How does the Audio Alert work?**
+   - `playNotificationSound()` uses the built-in browser `AudioContext` (Web Audio API).
+   - It creates two sine wave oscillators (`880Hz` and `1108.73Hz`) with gentle gain decay envelopes to produce a clean two-tone chime without relying on external mp3 files or network downloads.
+   - When an active countdown crosses below `0ms`, it plays the chime once and sets `item.hasAlerted = true` so it doesn't repeat every second.
+
+3. **How does data stay saved when refreshing?**
    - The browser provides a built-in storage API called `localStorage`.
    - When an item is added or deleted, `saveItemsToLocalStorage()` calls `JSON.stringify(academicItems)` and stores it.
    - When the page loads (`DOMContentLoaded`), `loadItemsFromLocalStorage()` reads the string with `localStorage.getItem()` and converts it back to an array using `JSON.parse()`.
 
-3. **How does filtering work?**
+4. **How does filtering work?**
    - When you change either the Category or Status dropdown, `categoryFilter.addEventListener("change", renderCountdownList)` triggers immediately.
    - The function loops through the array and only displays cards that match both chosen criteria.
 
